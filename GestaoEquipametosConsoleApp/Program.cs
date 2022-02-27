@@ -12,21 +12,23 @@ namespace GestaoEquipametosConsoleApp
         static int id = 1;
         static int idChamado = 1;
 
+        static DateTime date = new DateTime();
+
         static void Main(string[] args)
         {
             //Equipamentos pré inseridos para teste
-            registroEquipamentos[0] = new string[] { "1", "LAPTOP",    "1.200,00", "459874", "10/08/1998", "HP" };
-            registroEquipamentos[1] = new string[] { "2", "TORRADEIRA",   "45,00", "587418", "21/10/1998", "ARNO" };
+            registroEquipamentos[0] = new string[] { "1", "LAPTOP",    "1.200,00", "459874", "10/08/1998", "HP"        };
+            registroEquipamentos[1] = new string[] { "2", "TORRADEIRA",   "45,00", "587418", "21/10/1998", "ARNO"      };
             registroEquipamentos[2] = new string[] { "3", "GELADEIRA", "2.400,00", "569735", "02/06/2001", "ELETROLUX" };
-            registroEquipamentos[3] = new string[] { "4", "AUTOMÓVEL", "60.000,00", "569735", "15/07/2008", "FORD" };
-            //========================================================================================================
+            registroEquipamentos[3] = new string[] { "4", "AUTOMÓVEL", "60.000,00", "569735", "15/07/2008", "FORD"     };
+            //===========================================================================================================
 
             //Chamados pré inseridos para teste
-            registroChamados[0] = new string[] { "1", "COISAS A FAZER",   "LAPTOP",     "25/02/2022", "0", "NÃO FUNCIONA BEM",   "21" };
-            registroChamados[1] = new string[] { "2", "QUALQUER JEITO",   "PIPOQUEIRA", "25/02/2022", "0", "JÁ FEITO",           "20" }; 
-            registroChamados[2] = new string[] { "3", "RESOLVER PROBLEMA","LANTERNA",   "25/02/2022", "0", "PRODUTO USADO",      "23" };
-            registroChamados[3] = new string[] { "4", "TENTAR NOVAMENTE", "LAVA-LOUÇA", "25/02/2022", "0", "VENDIDO PARA OUTRO", "25" };
-            //========================================================================================================
+            registroChamados[0] = new string[] { "1", "COISAS A FAZER",   "LAPTOP",     (date = new DateTime(2022, 02, 25)).ToString("dd/MM/yyyy"), "0", "NÃO FUNCIONA BEM"   };
+            registroChamados[1] = new string[] { "2", "QUALQUER JEITO",   "PIPOQUEIRA", (date = new DateTime(2022, 02, 25)).ToString("dd/MM/yyyy"), "0", "JÁ FEITO"           }; 
+            registroChamados[2] = new string[] { "3", "RESOLVER PROBLEMA","LANTERNA",   (date = new DateTime(2022, 02, 25)).ToString("dd/MM/yyyy"), "0", "PRODUTO USADO"      };
+            registroChamados[3] = new string[] { "4", "TENTAR NOVAMENTE", "LAVA-LOUÇA", (date = new DateTime(2022, 02, 25)).ToString("dd/MM/yyyy"), "0", "VENDIDO PARA OUTRO" };
+            //===========================================================================================================
 
             MostrarMenuInicial();
 
@@ -204,6 +206,7 @@ namespace GestaoEquipametosConsoleApp
 
             escreva_("\nEQUIPAMENTO CADASTRADO!...(tecle)");
             Console.ReadKey();
+            ExibirRegistroEquipamentos();
         }
         static void ExibirRegistroEquipamentos()
         {
@@ -365,7 +368,7 @@ namespace GestaoEquipametosConsoleApp
         static void InserirChamados()
         {
             Console.Clear();
-            string[] chamado = new string[7];
+            string[] chamado = new string[6];
 
             for (int i = 0; i < registroChamados.Length; i++)
             {
@@ -416,8 +419,7 @@ namespace GestaoEquipametosConsoleApp
                         break;
                     case 3:
                         escreva("Data de Abertura: ");
-                        chamado[i] = DateTime.Now.ToString();
-                        chamado[6] = DateTime.Now.Day.ToString();
+                        chamado[i] = DateTime.Today.ToString("dd/MM/yyyy");
                         escreva_(chamado[i]);
                         break;
                     case 5:
@@ -439,6 +441,7 @@ namespace GestaoEquipametosConsoleApp
 
             escreva_("\nCHAMADO CADASTRADO!...(tecle)");
             Console.ReadKey();
+            ExibirChamados();
         }
         static void ExibirChamados()
         {
@@ -454,7 +457,7 @@ namespace GestaoEquipametosConsoleApp
 
                 if (registroChamados[i] != null)
                 {
-                    for (j = 0; j < registroChamados[i].Length - 1; j++)
+                    for (j = 0; j < registroChamados[i].Length; j++)
                     {
                         if (j == 0)
                         {
@@ -470,7 +473,7 @@ namespace GestaoEquipametosConsoleApp
                         else
                             escreva(registroChamados[i][j] + " - ");
                     }
-                    if (j >= registroChamados[i].Length - 1)
+                    if (j >= registroChamados[i].Length)
                     {
                         escreva_("\n");
                     }
@@ -619,20 +622,10 @@ namespace GestaoEquipametosConsoleApp
                 {
                     for (int j = 0; j < registroChamados[i].Length; j++)
                     {
-                        if (registroChamados[i][j] != null)
+                        if (registroChamados[i] != null)
                         {
-                            int diferenca = 0;
-                            int diasEmAberto = 0;
-
-                            if (diferenca >= 0)
-                            {
-                                diasEmAberto = DateTime.Now.Day - int.Parse(registroChamados[i][6]);
-                            }
-                            else if (diferenca < 0)
-                            {
-                                diasEmAberto = int.Parse(registroChamados[i][6]) + Math.Abs(DateTime.Now.Day - int.Parse(registroChamados[i][6]));
-                            }
-
+                            date = Convert.ToDateTime(registroChamados[i][3]);
+                            int diasEmAberto = Math.Abs((int)date.Subtract(DateTime.Today).TotalDays);
                             registroChamados[i][4] = diasEmAberto.ToString();
                         }
                         else
