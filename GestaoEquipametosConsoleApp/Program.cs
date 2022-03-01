@@ -302,6 +302,8 @@ namespace GestaoEquipametosConsoleApp
             int idExclui = int.Parse(excluirID);
             int contAux = 0;
 
+            VerificarIDdoEquipamentoNaChamada(idExclui);
+
             if (idExclui == 0)
             {
                 escreva_("\nOpção inválida, tecle para retornar ao início...");
