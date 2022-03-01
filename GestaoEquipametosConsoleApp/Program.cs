@@ -600,7 +600,7 @@ namespace GestaoEquipametosConsoleApp
             {
                 if (registroChamados[i] != null)
                 {
-                    if ( idExclui == int.Parse(registroChamados[i][0]) )
+                    if ( registroEquipamentos[idExclui-1][1] == registroChamados[i][2] )
                     {
                         escreva_("\n\nProibido excluir um registro vinculado a uma chamada. Exclua a chamada antes...");
                         Console.ReadKey();
