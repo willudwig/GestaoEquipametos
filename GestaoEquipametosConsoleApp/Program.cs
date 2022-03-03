@@ -162,7 +162,7 @@ namespace GestaoEquipametosConsoleApp
                 }
                 else if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4')
                 {
-                    escreva_("Opção inválida!");
+                    escreva_("\nOpção inválida!");
                     Console.ReadKey();
                     Console.Clear();
                     continue;
@@ -1031,19 +1031,37 @@ namespace GestaoEquipametosConsoleApp
             {
                 if (registroChamados[i] != null)
                 {
-                    if ( registroEquipamentos[idExclui - 1][1] == registroChamados[i][2] )
+                    if (registroEquipamentos[i] != null)
                     {
-                        escreva_("\n\nProibido excluir um registro vinculado a uma chamada. Exclua a chamada antes...");
-                        Console.ReadKey();
-                        MostrarMenuInicial();
-                        break;
+                        if (registroEquipamentos[i][0] == idExclui.ToString())
+                        {
+                            for (int j = 0; j < registroChamados.Length; j++)
+                            {
+                                if (registroChamados[j] != null)
+                                {
+                                    if (registroEquipamentos[i][1] == registroChamados[j][2])
+                                    {
+                                        escreva_("\n\nProibido excluir um registro vinculado a uma chamada. Exclua a chamada antes...");
+                                        Console.ReadKey();
+                                        MostrarMenuInicial();
+                                        break;
+                                    }
+                                    else
+                                        continue;
+                                }
+                                else
+                                    break;
+                             }
+                        }
+                        else
+                            continue;
                     }
                     else
-                        continue;
+                        break;
                 }
                 else if (registroEquipamentos[i] == null)
                 {
-                    continue;
+                    break;
                 }
             }
         }
@@ -1163,7 +1181,7 @@ namespace GestaoEquipametosConsoleApp
                 {
                     if (cont[x].ToString() == aux[k][0])
                     {
-                        Console.WriteLine("- {0} aparece {1} vez(es)", aux[k][1], aux[k][0]);
+                        Console.WriteLine("- {0} aparece {1} vezes", aux[k][1], aux[k][0]);
                         escreva_("");
                         x++;
                         k = -1;
