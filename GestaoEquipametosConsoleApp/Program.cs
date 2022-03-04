@@ -587,7 +587,7 @@ namespace GestaoEquipametosConsoleApp
 
                                 if (titulo == "")
                                 {
-                                    escreva("\nO campo Título não pode estar vazio.\n");
+                                    escreva("\nO campo Título não pode estar vazio.\n\n");
                                     continue;
                                 }
                                 else
@@ -893,6 +893,7 @@ namespace GestaoEquipametosConsoleApp
                     registroChamados[idComparador - 1][2] = novaInfo;
                     break;
                 case '3':
+                    int resultadoSolicitante = 0;
                     escreva("\n\nEscolha o novo 'SOLICITANTE': ");
                     string opcaoSolicitante = "";
                     escreva_("\n");
@@ -907,12 +908,26 @@ namespace GestaoEquipametosConsoleApp
                         {
                             break;
                         }
+
                     }
 
-                    escreva("\nDigite uma opção de solicitante: ");
-                    opcaoSolicitante = leia_().ToUpper();
-                    escreva_("");
-                    int resultadoSolicitante = int.Parse(opcaoSolicitante);
+                    while (true)
+                    {
+                        escreva("\nDigite uma opção de solicitante: ");
+                        
+                        opcaoSolicitante = leia_().ToUpper();
+                        escreva_("");
+
+                        resultadoSolicitante = int.Parse(opcaoSolicitante);
+
+                        if (registroSolicitantes[resultadoSolicitante - 1] == null)
+                        {
+                            escreva_("\nOpção inválida.\n");
+                            continue;
+                        }
+                        else break;
+                    }
+
                     registroChamados[resultadoSolicitante - 1][5] = registroSolicitantes[resultadoSolicitante - 1][1];
                     break;
 
@@ -942,6 +957,7 @@ namespace GestaoEquipametosConsoleApp
                     break;
                 default:
                     escreva("\n\nOpção inválida!");
+                    Console.ReadKey();
                     break;
             }
             escreva_("\nREGISTRO ATUALIZADO!");
@@ -1101,7 +1117,11 @@ namespace GestaoEquipametosConsoleApp
                             escreva_("Telefone: \n");
                             escreva("DDD: ");
                             try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
-                            escreva_("Número do telefone: ");
+                            if (ddd.ToString().Length > 2)
+                            {
+                                escreva_("\nDDD só tem dois números.\n");
+                            }
+                            escreva("Número do telefone: ");
                             try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                             if (ddd == 0 || telefone == 0)
@@ -1180,8 +1200,19 @@ namespace GestaoEquipametosConsoleApp
             switch (opcao)
             {
                 case '1':
-                    escreva("\n\nDigite o novo 'NOME': ");
-                    novaInfo = leia_().ToUpper();
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'NOME': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo.Length < 6)
+                        {
+                            escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
                     registroSolicitantes[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
@@ -1213,6 +1244,10 @@ namespace GestaoEquipametosConsoleApp
                         escreva_("\n\nDigite o novo Telefone: \n");
                         escreva("DDD: ");
                         try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        if (ddd.ToString().Length > 2)
+                        {
+                            escreva_("\nDDD só tem dois números.\n");
+                        }
                         escreva("\nNúmero do telefone: ");
                         try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
