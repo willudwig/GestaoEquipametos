@@ -270,15 +270,19 @@ namespace GestaoEquipametosConsoleApp
                     case 4:
                         while (true)
                         {
-                            escreva_("Data de fabricação: \n");
+                            int dia = 0;
+                            int mes = 0;
+                            int ano = 0;
+
+                            escreva_("\n\nData de fabricação: ");
                             escreva("Dia: ");
-                            int dia = int.Parse(leia_());
+                            try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                             escreva_(" ");
                             escreva("Mês: ");
-                            int mes = int.Parse(leia_());
+                            try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                             escreva_(" ");
                             escreva("Ano: ");
-                            int ano = int.Parse(leia_());
+                            try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                             escreva_(" ");
 
                             if ((dia == 0) || (mes == 0) || (ano == 0) || (ano == null) || (mes == null) || (dia == null))
@@ -409,13 +413,40 @@ namespace GestaoEquipametosConsoleApp
                     break;
                 case '3':
                     escreva("\n\nDigite o novo 'Nº SÉRIE': ");
-                    novaInfo = leia_();
+                    novaInfo = leia_().ToUpper();
                     registroEquipamentos[idComparador - 1][3] = novaInfo;
                     break;
                 case '4':
-                    escreva("\n\nDigite o novo 'DATA FAB': ");
-                    novaInfo = leia_().ToUpper();
-                    registroEquipamentos[idComparador - 1][4] = novaInfo;
+                    while (true)
+                    {
+                        int dia = 0;
+                        int mes = 0;
+                        int ano = 0;
+
+                        escreva_("\n\nDigite a nova 'DATA FAB': ");
+                        escreva("Dia: ");
+                        try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        escreva_(" ");
+                        escreva("Mês: ");
+                        try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        escreva_(" ");
+                        escreva("Ano: ");
+                        try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        escreva_(" ");
+
+                        if ((dia == 0) || (mes == 0) || (ano == 0) || (ano == null) || (mes == null) || (dia == null))
+                        {
+                            escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
+                            continue;
+                        }
+                        else
+                        {
+                            DateTime novaData = new DateTime(ano, mes, dia);
+                            registroEquipamentos[idComparador - 1][4] = novaData.ToString("dd/MM/yyy");
+                            escreva_("");
+                            break; ;
+                        }
+                    }
                     break;
                 case '5':
                     escreva("\n\nDigite o novo 'FABRICANTE': ");
@@ -426,6 +457,8 @@ namespace GestaoEquipametosConsoleApp
                     escreva("\n\nOpção inválida!");
                     break;
             }
+            escreva_("\nREGISTRO ATUALIZADO!");
+            Console.ReadKey();
             ExibirRegistroEquipamentos();
         }
         static void ExcluiroRegistroEquipamento()
@@ -912,7 +945,7 @@ namespace GestaoEquipametosConsoleApp
                     escreva("\n\nOpção inválida!");
                     break;
             }
-            escreva_("\nREGISTRO DE CHAMADOS ATAULIZADO!...(tecle)");
+            escreva_("\nREGISTRO DE CHAMADOS ATAULIZADO!");
             Console.ReadKey();
         }
         static void ExcluirChamado()
@@ -1063,16 +1096,22 @@ namespace GestaoEquipametosConsoleApp
                     case 3:
                         while (true)
                         {
-                            escreva("Telefone: ");
-                            string tel = leia_().ToUpper();
+                            int ddd = 0;
+                            int telefone = 0;
 
-                            if (tel == "")
+                            escreva_("Telefone: \n");
+                            escreva("DDD: ");
+                            try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            escreva_("Número do telefone: ");
+                            try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                            if (ddd == 0 || telefone == 0)
                             {
-                                escreva_("\nO campo Telefone não pode estar vazio.\n");
+                                escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
                                 continue;
                             }
 
-                            solicitante[i] = tel;
+                            solicitante[i] = ddd.ToString() + " - " + telefone.ToString();
                             escreva_("");
                             break;
                         }
@@ -1152,14 +1191,34 @@ namespace GestaoEquipametosConsoleApp
                     registroSolicitantes[idComparador - 1][2] = novaInfo;
                     break;
                 case '3':
-                    escreva("\n\nDigite o novo 'TELEFONE': ");
-                    novaInfo = leia_();
-                    registroSolicitantes[idComparador - 1][3] = novaInfo;
+                    while (true)
+                    {
+                        int ddd = 0;
+                        int telefone = 0;
+
+                        escreva_("Digite o novo Telefone: \n");
+                        escreva("DDD: ");
+                        try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        escreva_("Número do telefone: ");
+                        try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                        if (ddd == 0 || telefone == 0)
+                        {
+                            escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
+                            continue;
+                        }
+
+                        registroSolicitantes[idComparador - 1][3] = ddd.ToString() + " - " + telefone.ToString();
+                        escreva_("");
+                        break;
+                    }
                     break;
                 default:
                     escreva("\n\nOpção inválida!");
                     break;
             }
+            escreva_("REGISTRO ATUALIZADO!");
+            Console.ReadKey();
             ExibirRegistroSolicitantes();
         }
         static void ExcluirSolicitante()
