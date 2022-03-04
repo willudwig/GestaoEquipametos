@@ -833,24 +833,30 @@ namespace GestaoEquipametosConsoleApp
 
                                 for (l = 0; l < registroChamados[k].Length; l++)
                                 {
-                                    if (l == 0)
+                                    if (l != 4)
                                     {
-                                        Console.ForegroundColor = ConsoleColor.Green;
-                                        escreva(registroChamados[k][l]);
-                                        Console.ForegroundColor = ConsoleColor.White;
-                                        escreva(" - ");
+                                        if (l == 0)
+                                        {
+                                            Console.ForegroundColor = ConsoleColor.Green;
+                                            escreva(registroChamados[k][l]);
+                                            Console.ForegroundColor = ConsoleColor.White;
+                                            escreva(" - ");
+                                        }
+                                        else if (l == 4)
+                                        {
+                                            escreva(registroChamados[k][l] + " DIA(S) - ");
+                                        }
+                                        else
+                                            escreva(registroChamados[k][l] + " - ");
                                     }
-                                    else if (l == 4)
-                                    {
-                                        escreva(registroChamados[k][l] + " DIA(S) - ");
-                                    }
-                                    else
-                                        escreva(registroChamados[k][l] + " - ");
                                 }
+
                                 if (l >= registroChamados[k].Length)
                                 {
                                     escreva_("\n");
                                 }
+                                else
+                                    continue;
                             }
                             else
                                 continue;
