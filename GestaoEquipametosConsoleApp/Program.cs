@@ -459,7 +459,6 @@ namespace GestaoEquipametosConsoleApp
             }
             escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
-            ExibirRegistroEquipamentos();
         }
         static void ExcluiroRegistroEquipamento()
         {
@@ -945,7 +944,7 @@ namespace GestaoEquipametosConsoleApp
                     escreva("\n\nOpção inválida!");
                     break;
             }
-            escreva_("\nREGISTRO DE CHAMADOS ATAULIZADO!");
+            escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
         }
         static void ExcluirChamado()
@@ -1081,7 +1080,7 @@ namespace GestaoEquipametosConsoleApp
 
                             if (email == "" || !email.Contains("@"))
                             {
-                                escreva_("\nO campo E-mail está incorreto, digite novamente.\n");
+                                escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
                                 continue;
                             }
                             else
@@ -1111,7 +1110,7 @@ namespace GestaoEquipametosConsoleApp
                                 continue;
                             }
 
-                            solicitante[i] = ddd.ToString() + " - " + telefone.ToString();
+                            solicitante[i] = ddd.ToString() + "-" + telefone.ToString();
                             escreva_("");
                             break;
                         }
@@ -1181,14 +1180,29 @@ namespace GestaoEquipametosConsoleApp
             switch (opcao)
             {
                 case '1':
-                    escreva("\n\nDigite o novo 'NOME': ");
+                    escreva("\n\n\Digite o novo 'NOME': ");
                     novaInfo = leia_().ToUpper();
                     registroSolicitantes[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
-                    escreva("\n\nDigite o novo 'E-MAIL': ");
-                    novaInfo = leia_();
-                    registroSolicitantes[idComparador - 1][2] = novaInfo;
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'E-MAIL': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo == "" || !novaInfo.Contains("@"))
+                        {
+                            escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
+                            continue;
+                        }
+                        else
+                        {
+                            registroSolicitantes[idComparador - 1][2] = novaInfo;
+                            escreva_("");
+                            break;
+                        }
+                        break;
+                    }
                     break;
                 case '3':
                     while (true)
@@ -1196,10 +1210,10 @@ namespace GestaoEquipametosConsoleApp
                         int ddd = 0;
                         int telefone = 0;
 
-                        escreva_("Digite o novo Telefone: \n");
+                        escreva_("\n\nDigite o novo Telefone: \n");
                         escreva("DDD: ");
                         try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
-                        escreva_("Número do telefone: ");
+                        escreva("\nNúmero do telefone: ");
                         try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                         if (ddd == 0 || telefone == 0)
@@ -1208,7 +1222,7 @@ namespace GestaoEquipametosConsoleApp
                             continue;
                         }
 
-                        registroSolicitantes[idComparador - 1][3] = ddd.ToString() + " - " + telefone.ToString();
+                        registroSolicitantes[idComparador - 1][3] = ddd.ToString() + "-" + telefone.ToString();
                         escreva_("");
                         break;
                     }
@@ -1217,9 +1231,9 @@ namespace GestaoEquipametosConsoleApp
                     escreva("\n\nOpção inválida!");
                     break;
             }
-            escreva_("REGISTRO ATUALIZADO!");
+            escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
-            ExibirRegistroSolicitantes();
+       
         }
         static void ExcluirSolicitante()
         {
