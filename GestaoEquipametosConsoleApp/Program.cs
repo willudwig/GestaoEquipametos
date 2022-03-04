@@ -222,8 +222,18 @@ namespace GestaoEquipametosConsoleApp
                     case 2:
                         while (true)
                         {
+                            double preco = 0;
                             escreva("Preço de aquisição: ");
-                            double preco = Convert.ToDouble(leia_());
+                            try
+                            {
+                                preco = Convert.ToDouble(leia_());
+                            } 
+                            catch (FormatException fe)
+                            {
+                                escreva_("\nFormato de inserção incorreto. Digite apenas números.\n");
+                                continue;
+                            }
+
                             if (preco < 1)
                             {
                                 escreva_("\nO preço não pode conter vírgula, não pode ser número negativo nem zero. (ex. 10.25)\n");
