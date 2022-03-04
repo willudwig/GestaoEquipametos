@@ -423,7 +423,7 @@ namespace GestaoEquipametosConsoleApp
                         int mes = 0;
                         int ano = 0;
 
-                        escreva_("\n\nDigite a nova 'DATA FAB': ");
+                        escreva_("\n\nDigite a nova 'DATA FAB': \n");
                         escreva("Dia: ");
                         try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                         escreva_(" ");
