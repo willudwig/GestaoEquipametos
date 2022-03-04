@@ -390,9 +390,22 @@ namespace GestaoEquipametosConsoleApp
                     registroEquipamentos[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
-                    escreva("\n\nDigite o novo 'PREÇO': ");
-                    novaInfo = leia_();
-                    registroEquipamentos[idComparador - 1][2] = novaInfo;
+                    while (true)
+                    {
+                        double preco = 0;
+                        escreva("\n\nDigite o novo 'PREÇO': ");
+                        try
+                        {
+                            preco = Convert.ToDouble(leia_());
+                        }
+                        catch(FormatException fe)
+                        {
+                            escreva_("\nFormato de inserção incorreto. Digite apenas números.\n");
+                            continue;
+                        }
+                        registroEquipamentos[idComparador - 1][2] = preco.ToString("N2");
+                        break;
+                    }
                     break;
                 case '3':
                     escreva("\n\nDigite o novo 'Nº SÉRIE': ");
