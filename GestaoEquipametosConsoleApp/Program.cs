@@ -344,6 +344,10 @@ namespace GestaoEquipametosConsoleApp
                             Console.ForegroundColor = ConsoleColor.White;
                             escreva(" - ");
                         }
+                        else if (j == 2)
+                        {
+                           escreva("R$ " + registroEquipamentos[i][j] + " - ");
+                        }
                         else
                             escreva(registroEquipamentos[i][j] + " - ");
                     }
