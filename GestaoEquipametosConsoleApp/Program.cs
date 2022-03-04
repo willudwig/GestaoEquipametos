@@ -1180,7 +1180,7 @@ namespace GestaoEquipametosConsoleApp
             switch (opcao)
             {
                 case '1':
-                    escreva("\n\n\Digite o novo 'NOME': ");
+                    escreva("\n\nDigite o novo 'NOME': ");
                     novaInfo = leia_().ToUpper();
                     registroSolicitantes[idComparador - 1][1] = novaInfo;
                     break;
