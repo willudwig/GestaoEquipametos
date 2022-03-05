@@ -15,7 +15,7 @@ namespace GestaoEquipametosConsoleApp
         static int idChamado = 1;
         static int idSolicitante = 1;
 
-        static DateTime date = new DateTime();
+        static DateTime date = new();
 
         static void Main(string[] args)
         {
@@ -54,15 +54,15 @@ namespace GestaoEquipametosConsoleApp
         }
 
         #region escreva/leia
-        static void escreva_(string texto)
+        static void Escreva_(string texto)
         {
             Console.WriteLine(texto);
         }
-        static void escreva(string texto)
+        static void Escreva(string texto)
         {
             Console.Write(texto);
         }
-        static string leia_()
+        static string Leia_()
         {
             string texto = Console.ReadLine();
             return texto;
@@ -74,12 +74,12 @@ namespace GestaoEquipametosConsoleApp
             while (true)
             {
                 Console.Clear();
-                escreva_("TECLE UMA DAS OPÇÕES:\n\n1 - EQUIPAMENTOS\n2 - CHAMADOS\n3 - SOLICITANTES\n4 - SAIR");
+                Escreva_("TECLE UMA DAS OPÇÕES:\n\n1 - EQUIPAMENTOS\n2 - CHAMADOS\n3 - SOLICITANTES\n4 - SAIR");
                 char opcao = Console.ReadKey().KeyChar;
                 if (opcao == '1')
                 {
                     Console.Clear();
-                    escreva_("EQUIPAMENTO:\n\n1 - Inserir Novo \n2 - Editar\n3 - Excluir\n4 - Exibir Registros\n5 - Voltar ao Início");
+                    Escreva_("EQUIPAMENTO:\n\n1 - Inserir Novo \n2 - Editar\n3 - Excluir\n4 - Exibir Registros\n5 - Voltar ao Início");
                     opcao = Console.ReadKey().KeyChar;
 
                     switch (opcao)
@@ -100,14 +100,14 @@ namespace GestaoEquipametosConsoleApp
                         case '5':
                             continue;
                         default:
-                            escreva_("\nOpção inválida!");
+                            Escreva_("\nOpção inválida!");
                             break;
                     }
                 }
                 else if (opcao == '2')
                 {
                     Console.Clear();
-                    escreva_("CHAMADO:\n\n1 - Inserir Novo Chamado \n2 - Editar\n3 - Excluir\n4 - Exibir Chamados\n5 - Voltar ao Início");
+                    Escreva_("CHAMADO:\n\n1 - Inserir Novo Chamado \n2 - Editar\n3 - Excluir\n4 - Exibir Chamados\n5 - Voltar ao Início");
                     opcao = Console.ReadKey().KeyChar;
                     switch (opcao)
                     {
@@ -127,14 +127,14 @@ namespace GestaoEquipametosConsoleApp
                         case '5':
                             continue;
                          default:
-                            escreva_("Opção inválida!");
+                            Escreva_("Opção inválida!");
                             break;
                     }
                 }
                 else if (opcao == '3')
                 {
                     Console.Clear();
-                    escreva_("CHAMADO:\n\n1 - Inserir Solicitante \n2 - Editar\n3 - Excluir\n4 - Exibir Solicitantes\n5 - Voltar ao Início");
+                    Escreva_("CHAMADO:\n\n1 - Inserir Solicitante \n2 - Editar\n3 - Excluir\n4 - Exibir Solicitantes\n5 - Voltar ao Início");
                     opcao = Console.ReadKey().KeyChar;
                     switch (opcao)
                     {
@@ -154,20 +154,20 @@ namespace GestaoEquipametosConsoleApp
                         case '5':
                             continue;
                         default:
-                            escreva_("Opção inválida!");
+                            Escreva_("Opção inválida!");
                             break;
                     }
                 }
                 else if (opcao == '4')
                 {
                     Console.Clear();
-                    escreva_("Programa Finalizado!");
+                    Escreva_("Programa Finalizado!");
                     Console.ReadKey();
                     Environment.Exit(0);
                 }
                 else if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4')
                 {
-                    escreva_("\nOpção inválida!");
+                    Escreva_("\nOpção inválida!");
                     Console.ReadKey();
                     Console.Clear();
                     continue;
@@ -193,7 +193,7 @@ namespace GestaoEquipametosConsoleApp
                     break;
             }
 
-            escreva_("INSERINDO NOVO EQUIPAMENTO:\n");
+            Escreva_("INSERINDO NOVO EQUIPAMENTO:\n");
 
             for (int i = 0; i < 6; i++)
             {
@@ -207,44 +207,44 @@ namespace GestaoEquipametosConsoleApp
                         //verifica nome com menos de 6 letras
                         while (true)
                         {
-                            escreva("Nome do equipamento: ");
-                            equipamento[i] = leia_().ToUpper();
+                            Escreva("Nome do equipamento: ");
+                            equipamento[i] = Leia_().ToUpper();
                             if (equipamento[i].Length < 6)
                             {
-                                escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
+                                Escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
                                 continue;
                             }
                             else
                                 break;
                         }
 
-                        escreva_("");
+                        Escreva_("");
                         break;
 
                     case 2:
                         while (true)
                         {
-                            double preco = 0;
-                            escreva("Preço de aquisição: ");
+                            double preco;
+                            Escreva("Preço de aquisição: ");
                             try
                             {
-                                preco = Convert.ToDouble(leia_());
+                                preco = Convert.ToDouble(Leia_());
                             } 
-                            catch (FormatException fe)
+                            catch (FormatException)
                             {
-                                escreva_("\nFormato de inserção incorreto. Digite apenas números.\n");
+                                Escreva_("\nFormato de inserção incorreto. Digite apenas números.\n");
                                 continue;
                             }
 
                             if (preco < 1)
                             {
-                                escreva_("\nO preço não pode conter vírgula, não pode ser número negativo nem zero. (ex. 10.25)\n");
+                                Escreva_("\nO preço não pode conter vírgula, não pode ser número negativo nem zero. (ex. 10.25)\n");
                                 continue;
                             }
                             else
                             {
                                 equipamento[i] = preco.ToString("N2");
-                                escreva_("");
+                                Escreva_("");
                                 break;
                             }
                         }
@@ -253,11 +253,11 @@ namespace GestaoEquipametosConsoleApp
                     case 3:
                         while (true)
                         {
-                            escreva("Número de série: ");
-                            string numSerie = leia_().ToUpper();
+                            Escreva("Número de série: ");
+                            string numSerie = Leia_().ToUpper();
                             if (numSerie == null || numSerie == "")
                             {
-                                escreva_("\nO número de série não pode estar vazio.\n");
+                                Escreva_("\nO número de série não pode estar vazio.\n");
                                 continue;
                             }
                             else
@@ -266,56 +266,56 @@ namespace GestaoEquipametosConsoleApp
                                 break;
                             }
                         }
-                        escreva_("");
+                        Escreva_("");
                         break;
 
                     case 4:
                         while (true)
                         {
-                            int dia = 0;
-                            int mes = 0;
-                            int ano = 0;
+                            int dia;
+                            int mes;
+                            int ano;
 
-                            escreva_("Data de fabricação: \n");
-                            escreva("Dia: ");
-                            try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            Escreva_("Data de fabricação: \n");
+                            Escreva("Dia: ");
+                            try { dia = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                             if (dia > 31)
                             {
-                                escreva_("\nO dia não pode ser maior do que 31\n");
+                                Escreva_("\nO dia não pode ser maior do que 31\n");
                                 continue;
                             }
 
-                            escreva_(" ");
-                            escreva("Mês: ");
-                            try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            Escreva_(" ");
+                            Escreva("Mês: ");
+                            try { mes = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                             if (mes > 12)
                             {
-                                escreva_("\nO mês não pode ser maior do que 12.\n");
+                                Escreva_("\nO mês não pode ser maior do que 12.\n");
                                 continue;
                             }
 
-                            escreva("Ano: ");
-                            try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            Escreva("Ano: ");
+                            try { ano = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                             if (ano.ToString().Length < 4 || ano.ToString().Length > 4)
                             {
-                                escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
+                                Escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
                                 continue;
                             }
 
-                            escreva_(" ");
+                            Escreva_(" ");
 
                             if ( (dia == 0) || (mes == 0) || (ano == 0) )
                             {
-                                escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
+                                Escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
                                 continue;
                             }
 
-                            DateTime novaData = new DateTime(ano, mes, dia);
+                            DateTime novaData = new(ano, mes, dia);
                             equipamento[i] = novaData.ToString("dd/MM/yyy");
-                            escreva_("");
+                            Escreva_("");
                             break; ;
                         }
                         break;
@@ -323,18 +323,18 @@ namespace GestaoEquipametosConsoleApp
                     case 5:
                         while (true)
                         {
-                            escreva("Fabricante: ");
-                            string fabricante = leia_().ToUpper();
+                            Escreva("Fabricante: ");
+                            string fabricante = Leia_().ToUpper();
 
                             if (fabricante == "")
                             {
-                                escreva_("\nO campo Fabricante não pode ser vazio.\n");
+                                Escreva_("\nO campo Fabricante não pode ser vazio.\n");
                                 continue;
                             }
                             else
                             {
                                 equipamento[i] = fabricante;
-                                escreva_("");
+                                Escreva_("");
                                 break;
                             }
                         }
@@ -350,7 +350,7 @@ namespace GestaoEquipametosConsoleApp
             }
             r++;
 
-            escreva_("\nEQUIPAMENTO CADASTRADO!...(tecle)");
+            Escreva_("\nEQUIPAMENTO CADASTRADO!...(tecle)");
             Console.ReadKey();
             ExibirRegistroEquipamentos();
         }
@@ -360,12 +360,12 @@ namespace GestaoEquipametosConsoleApp
 
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            escreva_("ID - NOME - PREÇO - Nº SÉRIE - DATA FAB - FABRICANTE - \n");
+            Escreva_("ID - NOME - PREÇO - Nº SÉRIE - DATA FAB - FABRICANTE - \n");
             Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < registroEquipamentos.Length; i++)
             {
-                int j = 0;
+                int j;
 
                 if (registroEquipamentos[i] != null)
                 {
@@ -374,20 +374,20 @@ namespace GestaoEquipametosConsoleApp
                         if (j == 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            escreva(registroEquipamentos[i][j]);
+                            Escreva(registroEquipamentos[i][j]);
                             Console.ForegroundColor = ConsoleColor.White;
-                            escreva(" - ");
+                            Escreva(" - ");
                         }
                         else if (j == 2)
                         {
-                           escreva("R$ " + registroEquipamentos[i][j] + " - ");
+                           Escreva("R$ " + registroEquipamentos[i][j] + " - ");
                         }
                         else
-                            escreva(registroEquipamentos[i][j] + " - ");
+                            Escreva(registroEquipamentos[i][j] + " - ");
                     }
                     if (j >= registroEquipamentos[i].Length)
                     {
-                        escreva_("\n");
+                        Escreva_("\n");
                     }
                 }
             }
@@ -397,50 +397,50 @@ namespace GestaoEquipametosConsoleApp
             Console.Clear();
            
             ExibirRegistroEquipamentos();
-            int idComparador = 0;
+            int idComparador;
             while (true)
             {
-                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-                string idLido = leia_();
-                try { idComparador = int.Parse(idLido); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
+                Escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = Leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
-                if (registroEquipamentos[idComparador - 1] == null)
+                if (VerificarIDInexistente(registroEquipamentos, idComparador) == true)
                 {
-                    escreva_("\nO 'ID' digitado não existe.\n");
+                    Escreva_("\nO 'ID' digitado é inválido.\n");
                     continue;
                 }
                 else
                     break;
             }
 
-            char opcao = ' ';
+            char opcao;
             while (true) 
             {
-                escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - PREÇO\n3 - Nº SÉRIE\n4 - DATA FAB\n5 - FABRICANTE");
+                Escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - PREÇO\n3 - Nº SÉRIE\n4 - DATA FAB\n5 - FABRICANTE");
                 opcao = Console.ReadKey().KeyChar;
 
                 if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4' && opcao != '5')
                 {
-                    escreva_("\n\nOpção inválida\n");
+                    Escreva_("\n\nOpção inválida\n");
                     continue;
                 }
                 else
                     break;
             }
           
-            string novaInfo = "";
+            string novaInfo;
 
             switch (opcao)
             {
                 case '1':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'NOME': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'NOME': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo.Length < 6)
                         {
-                            escreva_("\nO campo Nome não pode ter menos que 6 letras.\n");
+                            Escreva_("\nO campo Nome não pode ter menos que 6 letras.\n");
                             continue;
                         }
                         else
@@ -451,15 +451,15 @@ namespace GestaoEquipametosConsoleApp
                 case '2':
                     while (true)
                     {
-                        double preco = 0;
-                        escreva("\n\nDigite o novo 'PREÇO': ");
+                        double preco;
+                        Escreva("\n\nDigite o novo 'PREÇO': ");
                         try
                         {
-                            preco = Convert.ToDouble(leia_());
+                            preco = Convert.ToDouble(Leia_());
                         }
-                        catch(FormatException fe)
+                        catch(FormatException)
                         {
-                            escreva_("\nFormato de inserção incorreto. Digite apenas números, sem vírgula (ex. 10.50).\n");
+                            Escreva_("\nFormato de inserção incorreto. Digite apenas números, sem vírgula (ex. 10.50).\n");
                             continue;
                         }
                         registroEquipamentos[idComparador - 1][2] = preco.ToString("N2");
@@ -469,12 +469,12 @@ namespace GestaoEquipametosConsoleApp
                 case '3':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'Nº SÉRIE': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'Nº SÉRIE': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo == "")
                         {
-                            escreva_("\nO campo Número de Série não pode estar vazio.\n");
+                            Escreva_("\nO campo Número de Série não pode estar vazio.\n");
                             continue;
                         }
                         else
@@ -487,54 +487,54 @@ namespace GestaoEquipametosConsoleApp
                 case '4':
                     while (true)
                     {
-                        int dia = 0;
-                        int mes = 0;
-                        int ano = 0;
+                        int dia;
+                        int mes;
+                        int ano;
 
-                        escreva_("\n\nDigite a nova 'DATA FAB': \n");
-                        escreva("Dia: ");
+                        Escreva_("\n\nDigite a nova 'DATA FAB': \n");
+                        Escreva("Dia: ");
 
-                        try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        try { dia = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                         if (dia > 31)
                         {
-                            escreva_("\nO dia não pode ser maior do que 31\n");
+                            Escreva_("\nO dia não pode ser maior do que 31\n");
                             continue;
                         }
 
-                        escreva_(" ");
-                        escreva("Mês: ");
+                        Escreva_(" ");
+                        Escreva("Mês: ");
 
-                        try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        try { mes = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                         if (mes > 12)
                         {
-                            escreva_("\nO mês não pode ser maior do que 12.\n");
+                            Escreva_("\nO mês não pode ser maior do que 12.\n");
                             continue;
                         }
 
-                        escreva_(" ");
-                        escreva("Ano: ");
+                        Escreva_(" ");
+                        Escreva("Ano: ");
 
-                        try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        try { ano = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                         if (ano.ToString().Length < 4 || ano.ToString().Length > 4)
                         {
-                            escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
+                            Escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
                             continue;
                         }
 
-                        escreva_(" ");
+                        Escreva_(" ");
 
                         if ((dia == 0) || (mes == 0) || (ano == 0))
                         {
-                            escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
+                            Escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
                             continue;
                         }
 
-                        DateTime novaData = new DateTime(ano, mes, dia);
+                        DateTime novaData = new(ano, mes, dia);
                         registroEquipamentos[idComparador - 1][4] = novaData.ToString("dd/MM/yyy");
-                        escreva_(" ");
+                        Escreva_(" ");
                         break; ;
 
                     }
@@ -542,12 +542,12 @@ namespace GestaoEquipametosConsoleApp
                 case '5':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'FABRICANTE': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'FABRICANTE': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo == "")
                         {
-                            escreva_("\nO campo Fabricante não pode ser vazio.\n");
+                            Escreva_("\nO campo Fabricante não pode ser vazio.\n");
                             continue;
                         }
                         else
@@ -557,17 +557,17 @@ namespace GestaoEquipametosConsoleApp
                     registroEquipamentos[idComparador - 1][5] = novaInfo;
                     break;
                 default:
-                    escreva("\n\nOpção inválida!");
+                    Escreva("\n\nOpção inválida!");
                     break;
             }
-            escreva_("\nREGISTRO ATUALIZADO!");
+            Escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
         }
         static void ExcluiroRegistroEquipamento()
         {
             if (registroEquipamentos[0] == null)
             {
-                escreva_("\nO registro está vazio.");
+                Escreva_("\nO registro está vazio.");
                 Console.ReadKey();
                 MostrarMenuInicial();
             }
@@ -577,16 +577,16 @@ namespace GestaoEquipametosConsoleApp
 
                 ExibirRegistroEquipamentos();
                 
-                int idExclui = 0;
+                int idExclui;
                 while (true)
                 {
-                    escreva("\n\nDigite o 'ID' a ser excluido: ");
-                    string excluirID = leia_().ToString();
+                    Escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = Leia_().ToString();
                     idExclui = int.Parse(excluirID);
 
-                    if (registroEquipamentos[idExclui - 1] == null)
+                    if (VerificarIDInexistente(registroEquipamentos, idExclui) == true)
                     {
-                        escreva_("\nO 'ID' digitado não existe.\n");
+                        Escreva_("\nO 'ID' digitado é inválido.\n");
                         continue;
                     }
                     else
@@ -598,7 +598,7 @@ namespace GestaoEquipametosConsoleApp
 
                 if (idExclui == 0)
                 {
-                    escreva_("\nOpção inválida, tecle para retornar ao início...");
+                    Escreva_("\nOpção inválida, tecle para retornar ao início...");
                     Console.ReadKey(); ;
                     MostrarMenuInicial();
                 }
@@ -651,7 +651,7 @@ namespace GestaoEquipametosConsoleApp
                     else
                         break;
                 }
-                escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
+                Escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
                 Console.ReadKey();
                 ExibirRegistroEquipamentos();
 
@@ -664,7 +664,7 @@ namespace GestaoEquipametosConsoleApp
         {
             if (registroEquipamentos[0] == null)
             {
-                escreva_("\n\nNão é possível abrir um chamado sem nenhum equipamento cadastrado.");
+                Escreva_("\n\nNão é possível abrir um chamado sem nenhum equipamento cadastrado.");
                 Console.ReadKey();
                 MostrarMenuInicial();
             }
@@ -685,7 +685,7 @@ namespace GestaoEquipametosConsoleApp
                         break;
                 }
 
-                escreva_("INSERINDO NOVO CHAMADO:\n");
+                Escreva_("INSERINDO NOVO CHAMADO:\n");
 
                 for (int i = 0; i < chamado.Length; i++)
                 {
@@ -698,33 +698,33 @@ namespace GestaoEquipametosConsoleApp
                         case 1:
                             while (true)
                             {
-                                escreva("Título: ");
-                                string titulo = leia_().ToUpper();
+                                Escreva("Título: ");
+                                string titulo = Leia_().ToUpper();
 
                                 if (titulo == "")
                                 {
-                                    escreva("\nO campo Título não pode estar vazio.\n\n");
+                                    Escreva("\nO campo Título não pode estar vazio.\n\n");
                                     continue;
                                 }
                                 else
                                 {
                                     chamado[i] = titulo;
-                                    escreva_("");
+                                    Escreva_("");
                                     break;
                                 }
                             }
                             break;
 
                         case 2:
-                            escreva("Equipamento: ");
-                            string opcaoEquipamento = " ";
-                            escreva_("\n");
+                            Escreva("Equipamento: ");
+                            string opcaoEquipamento;
+                            Escreva_("\n");
 
                             for (int k = 0; k < registroEquipamentos.Length; k++)
                             {
                                 if (registroEquipamentos[k] != null)
                                 {
-                                    escreva_((k + 1) + " - " + registroEquipamentos[k][1]);
+                                    Escreva_((k + 1) + " - " + registroEquipamentos[k][1]);
                                 }
                                 else if (registroEquipamentos[k] == null)
                                 {
@@ -732,17 +732,17 @@ namespace GestaoEquipametosConsoleApp
                                 }
                             }
 
-                            escreva_("");
-                            int resultado = 0;
+                            Escreva_("");
+                            int resultado;
                             while (true)
                             {
-                                escreva("\nDigite uma opção de equipamento: ");
-                                opcaoEquipamento = leia_();
-                                try { resultado = int.Parse(opcaoEquipamento); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
+                                Escreva("\nDigite uma opção de equipamento: ");
+                                opcaoEquipamento = Leia_();
+                                try { resultado = int.Parse(opcaoEquipamento); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
                                 if (registroEquipamentos[resultado - 1] == null)
                                 {
-                                    escreva_("\nOpção inválida.\n");
+                                    Escreva_("\nOpção inválida.\n");
                                     continue;
                                 }
                                 else
@@ -753,21 +753,21 @@ namespace GestaoEquipametosConsoleApp
                             break;
 
                         case 3:
-                            escreva("\nData de Abertura: ");
+                            Escreva("\nData de Abertura: ");
                             chamado[i] = DateTime.Today.ToString("dd/MM/yyyy");
-                            escreva_(chamado[i]);
+                            Escreva_(chamado[i]);
                             break;
 
                         case 5:
-                            escreva("\nSolicitante: ");
-                            string opcaoSolicitante = " ";
-                            escreva_("\n");
+                            Escreva("\nSolicitante: ");
+                            string opcaoSolicitante;
+                            Escreva_("\n");
 
                             for (int k = 0; k < registroSolicitantes.Length; k++)
                             {
                                 if (registroSolicitantes[k] != null)
                                 {
-                                    escreva_((k + 1) + " - " + registroSolicitantes[k][1]);
+                                    Escreva_((k + 1) + " - " + registroSolicitantes[k][1]);
                                 }
                                 else if (registroSolicitantes[k] == null)
                                 {
@@ -775,18 +775,18 @@ namespace GestaoEquipametosConsoleApp
                                 }
                             }
 
-                            escreva_("");
+                            Escreva_("");
 
-                            int resultadoSolicitante = 0;
+                            int resultadoSolicitante;
                             while (true)
                             {
-                                escreva("\nDigite uma opção de solicitante: ");
-                                opcaoSolicitante = leia_();
-                                try { resultadoSolicitante = int.Parse(opcaoSolicitante); } catch (FormatException fe) { escreva_("\nOpção inválida.\n"); continue; }
+                                Escreva("\nDigite uma opção de solicitante: ");
+                                opcaoSolicitante = Leia_();
+                                try { resultadoSolicitante = int.Parse(opcaoSolicitante); } catch (FormatException) { Escreva_("\nOpção inválida.\n"); continue; }
 
                                 if (registroSolicitantes[resultadoSolicitante - 1] == null)
                                 {
-                                    escreva_("\nOpção inválida.\n");
+                                    Escreva_("\nOpção inválida.\n");
                                     continue;
                                 }
                                 else
@@ -794,17 +794,17 @@ namespace GestaoEquipametosConsoleApp
                             }
                             
                             chamado[i] = registroSolicitantes[resultadoSolicitante - 1][1];
-                            escreva_("\nSolicitante: " + chamado[i]);
+                            Escreva_("\nSolicitante: " + chamado[i]);
                             break;
 
                         case 6:
-                            string opcaoStatus = "";
+                            string opcaoStatus;
                             while (true) 
                             {
-                                escreva_("\nStatus: ");
-                                escreva_("1 - ABERTO\n2 - FECHADO");
-                                escreva("\nDigite uma opção: ");
-                                opcaoStatus = leia_().ToUpper();
+                                Escreva_("\nStatus: ");
+                                Escreva_("1 - ABERTO\n2 - FECHADO");
+                                Escreva("\nDigite uma opção: ");
+                                opcaoStatus = Leia_().ToUpper();
                                 chamado[i] = opcaoStatus;
 
                                 if (opcaoStatus == "1")
@@ -819,27 +819,27 @@ namespace GestaoEquipametosConsoleApp
                                 }
                                 else
                                 {
-                                    escreva_("\nOpção inválida.");
+                                    Escreva_("\nOpção inválida.");
                                     continue;
                                 }
                             }
                            
-                            escreva("\nStatus: " + chamado[i]);
+                            Escreva("\nStatus: " + chamado[i]);
                             break;
 
                         case 7:
                             while (true)
                             {
-                                escreva("\n\nDescrição: ");
-                                string descricao = leia_().ToUpper();
+                                Escreva("\n\nDescrição: ");
+                                string descricao = Leia_().ToUpper();
                                 if (descricao == "")
                                 {
-                                    escreva_("\nO campo Descrição não pode estar vazio.\n");
+                                    Escreva_("\nO campo Descrição não pode estar vazio.\n");
                                     continue;
                                 }
 
                                 chamado[i] = descricao;
-                                escreva_("");
+                                Escreva_("");
                                 break;
                             }
                             break;
@@ -855,14 +855,14 @@ namespace GestaoEquipametosConsoleApp
                 }
                 rChamado++;
 
-                escreva_("\nCHAMADO CADASTRADO!...(tecle)");
+                Escreva_("\nCHAMADO CADASTRADO!...(tecle)");
             }
             Console.ReadKey();
 
         }   
         static void ExibirChamados()
         {
-            char opcao = ' ';
+            char opcao;
             VerificarDiasEmAberto();
             Console.Clear();
 
@@ -870,13 +870,13 @@ namespace GestaoEquipametosConsoleApp
 
             while (true)
             {
-                escreva_("VISUALIZANDO CHAMADOS:\n");
-                escreva_("Selecione um grupo:\n\n1 - TODOS\n2 - ABERTOS\n3 - FECHADOS\n4 - VOLTAR AO INÍCIO");
+                Escreva_("VISUALIZANDO CHAMADOS:\n");
+                Escreva_("Selecione um grupo:\n\n1 - TODOS\n2 - ABERTOS\n3 - FECHADOS\n4 - VOLTAR AO INÍCIO");
                 opcao = Console.ReadKey().KeyChar;
 
                 if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4')
                 {
-                    escreva_("\nOpção inválida.");
+                    Escreva_("\nOpção inválida.");
                     Console.ReadKey();
                     Console.Clear();
                     continue;
@@ -890,34 +890,34 @@ namespace GestaoEquipametosConsoleApp
                 case '1':
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
-                    escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
+                    Escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
                     Console.ResetColor();
 
                     for (int k = 0; k < registroChamados.Length; k++)
                     {
                         if (registroChamados[k] != null)
                         {
-                            int l = 0;
+                            int l;
 
                             for (l = 0; l < registroChamados[k].Length; l++)
                             {
                                 if (l == 0)
                                 {
                                     Console.ForegroundColor = ConsoleColor.Green;
-                                    escreva(registroChamados[k][l]);
+                                    Escreva(registroChamados[k][l]);
                                     Console.ForegroundColor = ConsoleColor.White;
-                                    escreva(" - ");
+                                    Escreva(" - ");
                                 }
                                 else if (l == 4)
                                 {
-                                    escreva(registroChamados[k][l] + " DIA(S) - ");
+                                    Escreva(registroChamados[k][l] + " DIA(S) - ");
                                 }
                                 else
-                                    escreva(registroChamados[k][l] + " - ");
+                                    Escreva(registroChamados[k][l] + " - ");
                             }
                             if (l >= registroChamados[k].Length)
                             {
-                                escreva_("\n");
+                                Escreva_("\n");
                             }
                         }
                         else
@@ -928,7 +928,7 @@ namespace GestaoEquipametosConsoleApp
                 case '2':
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
-                    escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
+                    Escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
                     Console.ResetColor();
 
                     for (int k = 0; k < registroChamados.Length; k++)
@@ -938,27 +938,27 @@ namespace GestaoEquipametosConsoleApp
 
                             if (registroChamados[k][6] == "ABERTO")
                             {
-                                int l = 0;
+                                int l;
 
                                 for (l = 0; l < registroChamados[k].Length; l++)
                                 {
                                     if (l == 0)
                                     {
                                         Console.ForegroundColor = ConsoleColor.Green;
-                                        escreva(registroChamados[k][l]);
+                                        Escreva(registroChamados[k][l]);
                                         Console.ForegroundColor = ConsoleColor.White;
-                                        escreva(" - ");
+                                        Escreva(" - ");
                                     }
                                     else if (l == 4)
                                     {
-                                        escreva(registroChamados[k][l] + " DIA(S) - ");
+                                        Escreva(registroChamados[k][l] + " DIA(S) - ");
                                     }
                                     else
-                                        escreva(registroChamados[k][l] + " - ");
+                                        Escreva(registroChamados[k][l] + " - ");
                                 }
                                 if (l >= registroChamados[k].Length)
                                 {
-                                    escreva_("\n");
+                                    Escreva_("\n");
                                 }
                             }
                             else
@@ -971,7 +971,7 @@ namespace GestaoEquipametosConsoleApp
                 case '3':
                     Console.Clear();
                     Console.ForegroundColor = ConsoleColor.Red;
-                    escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
+                    Escreva_("ID - TÍTULO - EQUIPAMENTO - DATA ABERTURA - DIAS EM ABERTO - SOLICITANTE - STATUS - DESCRIÇÃO - \n");
                     Console.ResetColor();
 
                     for (int k = 0; k < registroChamados.Length; k++)
@@ -981,7 +981,7 @@ namespace GestaoEquipametosConsoleApp
 
                             if (registroChamados[k][6] == "FECHADO")
                             {
-                                int l = 0;
+                                int l;
 
                                 for (l = 0; l < registroChamados[k].Length; l++)
                                 {
@@ -990,22 +990,22 @@ namespace GestaoEquipametosConsoleApp
                                         if (l == 0)
                                         {
                                             Console.ForegroundColor = ConsoleColor.Green;
-                                            escreva(registroChamados[k][l]);
+                                            Escreva(registroChamados[k][l]);
                                             Console.ForegroundColor = ConsoleColor.White;
-                                            escreva(" - ");
+                                            Escreva(" - ");
                                         }
                                         else if (l == 4)
                                         {
-                                            escreva(registroChamados[k][l] + " DIA(S) - ");
+                                            Escreva(registroChamados[k][l] + " DIA(S) - ");
                                         }
                                         else
-                                            escreva(registroChamados[k][l] + " - ");
+                                            Escreva(registroChamados[k][l] + " - ");
                                     }
                                 }
 
                                 if (l >= registroChamados[k].Length)
                                 {
-                                    escreva_("\n");
+                                    Escreva_("\n");
                                 }
                                 else
                                     continue;
@@ -1021,7 +1021,7 @@ namespace GestaoEquipametosConsoleApp
                     MostrarMenuInicial();
                     break;
                 default:
-                    escreva_("\nOpção inválida.\n");
+                    Escreva_("\nOpção inválida.\n");
                     Console.ReadKey();
                     break;
             }
@@ -1034,17 +1034,17 @@ namespace GestaoEquipametosConsoleApp
 
             ExibirChamados();
 
-            char opcao = ' ';
-            int idComparador = 0;
+            char opcao;
+            int idComparador;
             while (true)
             {
-                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-                string idLido = leia_();
-                try { idComparador = int.Parse(idLido); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
+                Escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = Leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
-                if (registroChamados[idComparador - 1] == null)
+                if (VerificarIDInexistente(registroChamados, idComparador) == true)
                 {
-                    escreva_("\nO 'ID' digitado não exite.'\n");
+                    Escreva_("\nO 'ID' digitado é inválido.\n");
                     continue;
                 }
                 else
@@ -1053,31 +1053,31 @@ namespace GestaoEquipametosConsoleApp
 
             while (true)
             {
-                escreva_("\nQual campo deseja alterar?:\n\n1 - TÍTULO\n2 - EQUIPAMENTO\n3 - SOLICITANTE\n4 - STATUS\n5 - DESCRIÇÃO");
+                Escreva_("\nQual campo deseja alterar?:\n\n1 - TÍTULO\n2 - EQUIPAMENTO\n3 - SOLICITANTE\n4 - STATUS\n5 - DESCRIÇÃO");
                 opcao = Console.ReadKey().KeyChar;
 
                 if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4' && opcao != '5')
                 {
-                    escreva_("\nOpção inválida.\n");
+                    Escreva_("\nOpção inválida.\n");
                     continue;
                 }
                 else
                     break;
             }
 
-            string novaInfo = "";
+            string novaInfo;
 
             switch (opcao)
             {
                 case '1':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'TÍTULO': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'TÍTULO': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo == "")
                         {
-                            escreva_("\nO campo Título não pode estar vazio.\n");
+                            Escreva_("\nO campo Título não pode estar vazio.\n");
                             continue;
                         }
                         else
@@ -1087,29 +1087,29 @@ namespace GestaoEquipametosConsoleApp
                     registroChamados[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
-                    escreva("\n\nEquipamentos:\n\n");
+                    Escreva("\n\nEquipamentos:\n\n");
                     for (int i = 0; i < registroEquipamentos.Length; i++)
                     {
                         if (registroEquipamentos[i] != null)
                         {
-                            escreva_((i + 1) + " - " + registroEquipamentos[i][1]);
+                            Escreva_((i + 1) + " - " + registroEquipamentos[i][1]);
                         }
                         else
                             break;
                     }
 
-                    string opcaoEquipamento = "";
-                    int opcaoEquip = 0;
+                    string opcaoEquipamento;
+                    int opcaoEquip;
 
                     while (true)
                     {
-                        escreva("\nEscolha o novo 'EQUIPAMENTO': ");
-                        opcaoEquipamento = leia_();
-                        try { opcaoEquip = Convert.ToInt32(opcaoEquipamento); } catch (FormatException fe) { escreva_("\nFormato inválido\n"); continue; }
+                        Escreva("\nEscolha o novo 'EQUIPAMENTO': ");
+                        opcaoEquipamento = Leia_();
+                        try { opcaoEquip = Convert.ToInt32(opcaoEquipamento); } catch (FormatException) { Escreva_("\nFormato inválido\n"); continue; }
 
                         if (registroEquipamentos[opcaoEquip - 1] == null)
                         {
-                            escreva_("\nOpção inválida.\n");
+                            Escreva_("\nOpção inválida.\n");
                             continue;
                         }
                         else
@@ -1117,19 +1117,19 @@ namespace GestaoEquipametosConsoleApp
                     }
 
                     registroChamados[idComparador - 1][2] = registroEquipamentos[opcaoEquip - 1][1];
-                    escreva("\nNovo equipamento: " + registroChamados[idComparador - 1][2] + "\n");
+                    Escreva("\nNovo equipamento: " + registroChamados[idComparador - 1][2] + "\n");
                     break;
                 case '3':
-                    int resultadoSolicitante = 0;
-                    escreva("\n\nEscolha o novo 'SOLICITANTE': ");
-                    string opcaoSolicitante = "";
-                    escreva_("\n");
+                    int resultadoSolicitante;
+                    Escreva("\n\nEscolha o novo 'SOLICITANTE': ");
+                    string opcaoSolicitante;
+                    Escreva_("\n");
 
                     for (int k = 0; k < registroSolicitantes.Length; k++)
                     {
                         if (registroSolicitantes[k] != null)
                         {
-                            escreva_((k + 1) + " - " + registroSolicitantes[k][1]);
+                            Escreva_((k + 1) + " - " + registroSolicitantes[k][1]);
                         }
                         else if (registroSolicitantes[k] == null)
                         {
@@ -1140,16 +1140,16 @@ namespace GestaoEquipametosConsoleApp
 
                     while (true)
                     {
-                        escreva("\nDigite uma opção de solicitante: ");
+                        Escreva("\nDigite uma opção de solicitante: ");
 
-                        opcaoSolicitante = leia_().ToUpper();
-                        escreva_("");
+                        opcaoSolicitante = Leia_().ToUpper();
+                        Escreva_("");
 
                         resultadoSolicitante = int.Parse(opcaoSolicitante);
 
                         if (registroSolicitantes[resultadoSolicitante - 1] == null)
                         {
-                            escreva_("\nOpção inválida.\n");
+                            Escreva_("\nOpção inválida.\n");
                             continue;
                         }
                         else break;
@@ -1159,14 +1159,14 @@ namespace GestaoEquipametosConsoleApp
                     break;
 
                 case '4':
-                    escreva_("\n\nEscolha o novo 'STATUS': \n");
-                    escreva_("1 - ABERTO\n2 - FECHADO");
+                    Escreva_("\n\nEscolha o novo 'STATUS': \n");
+                    Escreva_("1 - ABERTO\n2 - FECHADO");
                     
 
                     while (true)
                     {
-                        escreva("\nDigite uma opção: ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\nDigite uma opção: ");
+                        novaInfo = Leia_().ToUpper();
                        
                         if (novaInfo == "1")
                         {
@@ -1180,7 +1180,7 @@ namespace GestaoEquipametosConsoleApp
                         }
                         else if (novaInfo != "1" && novaInfo != "2")
                         {
-                            escreva_("\nOpção inválida.");
+                            Escreva_("\nOpção inválida.");
                             continue;
                         }
                     }
@@ -1189,12 +1189,12 @@ namespace GestaoEquipametosConsoleApp
                case '5':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'DESCRIÇÃO': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'DESCRIÇÃO': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo == "")
                         {
-                            escreva_("\nO campo Descrição não pode estar vazio.\n");
+                            Escreva_("\nO campo Descrição não pode estar vazio.\n");
                             continue;
                         }
                         else
@@ -1203,19 +1203,19 @@ namespace GestaoEquipametosConsoleApp
                     registroChamados[idComparador - 1][7] = novaInfo;
                     break;
                 default:
-                    escreva("\n\nOpção inválida.\n");
+                    Escreva("\n\nOpção inválida.\n");
                     Console.ReadKey();
                     break;
             }
             
-            escreva_("\nREGISTRO ATUALIZADO!");
+            Escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
         }
         static void ExcluirChamado()
         {
             if (registroChamados[0] == null)
             {
-                escreva_("\nO registro está vazio.");
+                Escreva_("\nO registro está vazio.");
                 Console.ReadKey();
                 MostrarMenuInicial();
             }
@@ -1223,16 +1223,16 @@ namespace GestaoEquipametosConsoleApp
             {
                 ExibirChamados();
                 string[][] auxiliar = new string[1000][];
-                int idExclui = 0;
+                int idExclui;
                 while (true)
                 {
-                    escreva("\n\nDigite o 'ID' a ser excluido: ");
-                    string excluirID = leia_().ToString();
-                    try { idExclui = int.Parse(excluirID); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
+                    Escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = Leia_().ToString();
+                    try { idExclui = int.Parse(excluirID); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
-                    if (registroChamados[idExclui - 1] == null)
+                    if (VerificarIDInexistente(registroChamados, idExclui) == true)
                     {
-                        escreva_("\nO 'ID' digitado não exite.'\n");
+                        Escreva_("\nO 'ID' digitado é inválido.\n");
                         continue;
                     }
                     else
@@ -1243,7 +1243,7 @@ namespace GestaoEquipametosConsoleApp
 
                 if (idExclui == 0)
                 {
-                    escreva_("\nOpção inválida, tecle para retornar ao início...");
+                    Escreva_("\nOpção inválida, tecle para retornar ao início...");
                     Console.ReadKey(); ;
                     MostrarMenuInicial();
                 }
@@ -1296,7 +1296,7 @@ namespace GestaoEquipametosConsoleApp
                     else
                         break;
                 }
-                escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
+                Escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
                 Console.ReadKey();
                 VerificaRegistroVazio();
             }
@@ -1321,7 +1321,7 @@ namespace GestaoEquipametosConsoleApp
                     break;
             }
 
-            escreva_("INSERINDO NOVO SOLICITANTE:\n");
+            Escreva_("INSERINDO NOVO SOLICITANTE:\n");
 
             for (int i = 0; i < solicitante.Length; i++)
             {
@@ -1334,35 +1334,35 @@ namespace GestaoEquipametosConsoleApp
                         //verifica nome com menos de 6 letras
                         while (true)
                         {
-                            escreva("Nome do Solicitante: ");
-                            solicitante[i] = leia_().ToUpper();
+                            Escreva("Nome do Solicitante: ");
+                            solicitante[i] = Leia_().ToUpper();
 
                             if (solicitante[i].Length < 6)
                             {
-                                escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
+                                Escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
                                 continue;
                             }
                             else
                                 break;
                         }
                         //=================================
-                        escreva_("");
+                        Escreva_("");
                         break;
                     case 2:
                         while (true)
                         {
-                            escreva("E-mail: ");
-                            string email = leia_().ToUpper();
+                            Escreva("E-mail: ");
+                            string email = Leia_().ToUpper();
 
                             if (email == "" || !email.Contains("@"))
                             {
-                                escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
+                                Escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
                                 continue;
                             }
                             else
                             {
                                 solicitante[i] = email;
-                                escreva_("");
+                                Escreva_("");
                                 break;
                             }
                         }
@@ -1371,28 +1371,28 @@ namespace GestaoEquipametosConsoleApp
                     case 3:
                         while (true)
                         {
-                            int ddd = 0;
-                            int telefone = 0;
+                            int ddd;
+                            int telefone;
 
-                            escreva_("Telefone: \n");
-                            escreva("DDD: ");
-                            try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            Escreva_("Telefone: \n");
+                            Escreva("DDD: ");
+                            try { ddd = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                             if (ddd.ToString().Length > 2)
                             {
-                                escreva_("\nDDD só tem dois números.\n");
+                                Escreva_("\nDDD só tem dois números.\n");
                                 continue;
                             }
-                            escreva("Número do telefone: ");
-                            try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                            Escreva("Número do telefone: ");
+                            try { telefone = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                             if (ddd == 0 || telefone == 0)
                             {
-                                escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
+                                Escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
                                 continue;
                             }
 
                             solicitante[i] = ddd.ToString() + "-" + telefone.ToString();
-                            escreva_("");
+                            Escreva_("");
                             break;
                         }
                         break;
@@ -1408,7 +1408,7 @@ namespace GestaoEquipametosConsoleApp
             }
             rSolicitante++;
 
-            escreva_("\nSOLICITANTE CADASTRADO!...(tecle)");
+            Escreva_("\nSOLICITANTE CADASTRADO!...(tecle)");
             Console.ReadKey();
             ExibirRegistroSolicitantes();
         }
@@ -1416,12 +1416,12 @@ namespace GestaoEquipametosConsoleApp
         {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Green;
-            escreva_("ID - NOME - E-MAIL - TELEFONE -\n");
+            Escreva_("ID - NOME - E-MAIL - TELEFONE -\n");
             Console.ResetColor();
 
             for (int i = 0; i < registroSolicitantes.Length; i++)
             {
-                int j = 0;
+                int j;
 
                 if (registroSolicitantes[i] != null)
                 {
@@ -1430,16 +1430,16 @@ namespace GestaoEquipametosConsoleApp
                         if (j == 0)
                         {
                             Console.ForegroundColor = ConsoleColor.Cyan;
-                            escreva(registroSolicitantes[i][j]);
+                            Escreva(registroSolicitantes[i][j]);
                             Console.ResetColor(); ;
-                            escreva(" - ");
+                            Escreva(" - ");
                         }
                         else
-                            escreva(registroSolicitantes[i][j] + " - ");
+                            Escreva(registroSolicitantes[i][j] + " - ");
                     }
                     if (j >= registroSolicitantes[i].Length)
                     {
-                        escreva_("\n");
+                        Escreva_("\n");
                     }
                 }
             }
@@ -1449,33 +1449,33 @@ namespace GestaoEquipametosConsoleApp
             Console.Clear();
 
             ExibirRegistroSolicitantes();
-            int idComparador = 0;
+            int idComparador;
 
             while (true)
             {
-                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-                string idLido = leia_();
-                try { idComparador = int.Parse(idLido); } catch (FormatException) { escreva_("\nFormato inválido.\n"); continue; }
+                Escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = Leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
-                if (registroSolicitantes[idComparador - 1] == null)
+                if (VerificarIDInexistente(registroSolicitantes, idComparador) == true)
                 {
-                    escreva_("\nO 'ID' digitado não exite.'\n");
+                    Escreva_("\nO 'ID' digitado é inválido.\n");
                     continue;
                 }
                 else
                     break;
             }
 
-            char opcao = ' ';
-            string novaInfo = " ";
+            char opcao;
+            string novaInfo;
             while (true)
             {
-                escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - E-MAIL\n3 - TELEFONE\n");
+                Escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - E-MAIL\n3 - TELEFONE\n");
                 opcao = Console.ReadKey().KeyChar;
 
                 if (opcao != '1' && opcao != '2' && opcao != '3')
                 {
-                    escreva_("\nOpção inválida.\n");
+                    Escreva_("\nOpção inválida.\n");
                     continue;
                 }
                 else
@@ -1487,12 +1487,12 @@ namespace GestaoEquipametosConsoleApp
                 case '1':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'NOME': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'NOME': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo.Length < 6)
                         {
-                            escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
+                            Escreva_("\nProibido nomes com menos de 6 letras, digite novamente...\n");
                             continue;
                         }
                         else
@@ -1503,56 +1503,55 @@ namespace GestaoEquipametosConsoleApp
                 case '2':
                     while (true)
                     {
-                        escreva("\n\nDigite o novo 'E-MAIL': ");
-                        novaInfo = leia_().ToUpper();
+                        Escreva("\n\nDigite o novo 'E-MAIL': ");
+                        novaInfo = Leia_().ToUpper();
 
                         if (novaInfo == "" || !novaInfo.Contains("@"))
                         {
-                            escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
+                            Escreva_("\nO campo E-mail está incorreto, digite novamente...\n");
                             continue;
                         }
                         else
                         {
                             registroSolicitantes[idComparador - 1][2] = novaInfo;
-                            escreva_("");
+                            Escreva_("");
                             break;
                         }
-                        break;
                     }
                     break;
                 case '3':
                     while (true)
                     {
-                        int ddd = 0;
-                        int telefone = 0;
+                        int ddd;
+                        int telefone;
 
-                        escreva_("\n\nDigite o novo Telefone: \n");
-                        escreva("DDD: ");
-                        try { ddd = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        Escreva_("\n\nDigite o novo Telefone: \n");
+                        Escreva("DDD: ");
+                        try { ddd = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
                         if (ddd.ToString().Length > 2)
                         {
-                            escreva_("\nDDD só tem dois números.\n");
+                            Escreva_("\nDDD só tem dois números.\n");
                             continue;
                         }
-                        escreva("\nNúmero do telefone: ");
-                        try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+                        Escreva("Número do telefone: ");
+                        try { telefone = int.Parse(Leia_()); } catch (FormatException) { Escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
 
                         if (ddd == 0 || telefone == 0)
                         {
-                            escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
+                            Escreva_("\nCampos DDD ou Telefone, não podem ser vazios\n");
                             continue;
                         }
 
                         registroSolicitantes[idComparador - 1][3] = ddd.ToString() + "-" + telefone.ToString();
-                        escreva_("");
+                        Escreva_("");
                         break;
                     }
                     break;
                 default:
-                    escreva("\n\nOpção inválida.");
+                    Escreva("\n\nOpção inválida.");
                     break;
             }
-            escreva_("\nREGISTRO ATUALIZADO!");
+            Escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
        
         }
@@ -1560,7 +1559,7 @@ namespace GestaoEquipametosConsoleApp
         {
             if (registroSolicitantes[0] == null)
             {
-                escreva_("\nO registro está vazio.");
+                Escreva_("\nO registro está vazio.");
                 Console.ReadKey();
                 MostrarMenuInicial();
             }
@@ -1569,17 +1568,17 @@ namespace GestaoEquipametosConsoleApp
 
                 ExibirRegistroSolicitantes();
                 string[][] auxiliar = new string[1000][];
-                int idExclui = 0;
+                int idExclui;
 
                 while (true)
                 {
-                    escreva("\n\nDigite o 'ID' a ser excluido: ");
-                    string excluirID = leia_().ToString();
-                    try { idExclui = int.Parse(excluirID); } catch (FormatException) { escreva_("\nFormato inválido.\n"); continue; }
+                    Escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = Leia_().ToString();
+                    try { idExclui = int.Parse(excluirID); } catch (FormatException) { Escreva_("\nFormato inválido.\n"); continue; }
 
-                    if (registroSolicitantes[idExclui - 1] == null)
+                    if (VerificarIDInexistente(registroSolicitantes, idExclui) == true)
                     {
-                        escreva_("\nO 'ID' digitado não exite.'\n");
+                        Escreva_("\nO 'ID' digitado é inválido.\n");
                         continue;
                     }
                     else
@@ -1589,7 +1588,7 @@ namespace GestaoEquipametosConsoleApp
 
                 if (idExclui == 0)
                 {
-                    escreva_("\nOpção inválida, tecle para retornar ao início...");
+                    Escreva_("\nOpção inválida, tecle para retornar ao início...");
                     Console.ReadKey(); ;
                     MostrarMenuInicial();
                 }
@@ -1642,7 +1641,7 @@ namespace GestaoEquipametosConsoleApp
                     else
                         break;
                 }
-                escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
+                Escreva_("\n\nREGISTRO EXCLUÍDO! ... (tecle)");
                 Console.ReadKey();
                 ExibirRegistroSolicitantes();
 
@@ -1667,7 +1666,7 @@ namespace GestaoEquipametosConsoleApp
                                 {
                                     if (registroEquipamentos[i][1] == registroChamados[j][2])
                                     {
-                                        escreva_("\n\nProibido excluir um registro vinculado a uma chamada. Exclua a chamada antes...");
+                                        Escreva_("\n\nProibido excluir um registro vinculado a uma chamada. Exclua a chamada antes...");
                                         Console.ReadKey();
                                         MostrarMenuInicial();
                                         break;
@@ -1750,8 +1749,8 @@ namespace GestaoEquipametosConsoleApp
         }
         static void VerificarEquipamentosComMaisProblemas() 
         {
-            escreva_("\n=====================================================");
-            escreva_("\nEQUIPAMENTOS MAIS FREQUÊNTES NO REGISTRO DE CHAMADOS:\n");
+            Escreva_("\n=====================================================");
+            Escreva_("\nEQUIPAMENTOS MAIS FREQUÊNTES NO REGISTRO DE CHAMADOS:\n");
 
             string[][] aux = new string[1000][];
             int[] cont = new int[1000];
@@ -1808,7 +1807,7 @@ namespace GestaoEquipametosConsoleApp
                     if (cont[x].ToString() == aux[k][0])
                     {
                         Console.WriteLine("- {0} aparece {1} vezes", aux[k][1], aux[k][0]);
-                        escreva_("");
+                        Escreva_("");
                         x++;
                         k = -1;
                     }
@@ -1818,6 +1817,31 @@ namespace GestaoEquipametosConsoleApp
                 else
                     break;
             }
+        }
+        static bool VerificarIDInexistente(string[][] registro, int idExclusao)
+        {
+            int indice = 0;
+            bool retorno = false;
+            for (int i = 0; i < registro.Length; i++)
+            {
+                if (registro[i] != null)
+                {
+                    if (registro[i][0] != idExclusao.ToString())
+                    {
+                        retorno = true;
+                        indice++;
+                        continue;
+                    }
+                    else
+                    {
+                        retorno = false;
+                        break;
+                    }
+                }
+                else break;
+            }
+
+            return retorno;
         }
     }
 }
