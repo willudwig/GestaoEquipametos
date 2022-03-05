@@ -46,6 +46,8 @@ namespace GestaoEquipametosConsoleApp
             //=============================================================================================================
             #endregion
 
+            Console.Title = "Gestão de Equipamentos";
+
             MostrarMenuInicial();
 
             Console.ReadKey();
@@ -274,29 +276,47 @@ namespace GestaoEquipametosConsoleApp
                             int mes = 0;
                             int ano = 0;
 
-                            escreva_("\n\nData de fabricação: ");
+                            escreva_("Data de fabricação: \n");
                             escreva("Dia: ");
                             try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                            if (dia > 31)
+                            {
+                                escreva_("\nO dia não pode ser maior do que 31\n");
+                                continue;
+                            }
+
                             escreva_(" ");
                             escreva("Mês: ");
                             try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
-                            escreva_(" ");
+
+                            if (mes > 12)
+                            {
+                                escreva_("\nO mês não pode ser maior do que 12.\n");
+                                continue;
+                            }
+
                             escreva("Ano: ");
                             try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                            if (ano.ToString().Length < 4 || ano.ToString().Length > 4)
+                            {
+                                escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
+                                continue;
+                            }
+
                             escreva_(" ");
 
-                            if ((dia == 0) || (mes == 0) || (ano == 0) || (ano == null) || (mes == null) || (dia == null))
+                            if ( (dia == 0) || (mes == 0) || (ano == 0) )
                             {
                                 escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
                                 continue;
                             }
-                            else
-                            {
-                                DateTime novaData = new DateTime(ano, mes, dia);
-                                equipamento[i] = novaData.ToString("dd/MM/yyy");
-                                escreva_("");
-                                break; ;
-                            }
+
+                            DateTime novaData = new DateTime(ano, mes, dia);
+                            equipamento[i] = novaData.ToString("dd/MM/yyy");
+                            escreva_("");
+                            break; ;
                         }
                         break;
 
@@ -377,20 +397,55 @@ namespace GestaoEquipametosConsoleApp
             Console.Clear();
            
             ExibirRegistroEquipamentos();
+            int idComparador = 0;
+            while (true)
+            {
+                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
 
-            escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-            string idLido = leia_();
-            int idComparador = int.Parse(idLido);
+                if (registroEquipamentos[idComparador - 1] == null)
+                {
+                    escreva_("\nO 'ID' digitado não existe.\n");
+                    continue;
+                }
+                else
+                    break;
+            }
 
-            escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - PREÇO\n3 - Nº SÉRIE\n4 - DATA FAB\n5 - FABRICANTE");
-            char opcao = Console.ReadKey().KeyChar;
+            char opcao = ' ';
+            while (true) 
+            {
+                escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - PREÇO\n3 - Nº SÉRIE\n4 - DATA FAB\n5 - FABRICANTE");
+                opcao = Console.ReadKey().KeyChar;
+
+                if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4' && opcao != '5')
+                {
+                    escreva_("\n\nOpção inválida\n");
+                    continue;
+                }
+                else
+                    break;
+            }
+          
             string novaInfo = "";
 
             switch (opcao)
             {
                 case '1':
-                    escreva("\n\nDigite o novo 'NOME': ");
-                    novaInfo = leia_().ToUpper();
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'NOME': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo.Length < 6)
+                        {
+                            escreva_("\nO campo Nome não pode ter menos que 6 letras.\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
                     registroEquipamentos[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
@@ -404,7 +459,7 @@ namespace GestaoEquipametosConsoleApp
                         }
                         catch(FormatException fe)
                         {
-                            escreva_("\nFormato de inserção incorreto. Digite apenas números.\n");
+                            escreva_("\nFormato de inserção incorreto. Digite apenas números, sem vírgula (ex. 10.50).\n");
                             continue;
                         }
                         registroEquipamentos[idComparador - 1][2] = preco.ToString("N2");
@@ -412,8 +467,21 @@ namespace GestaoEquipametosConsoleApp
                     }
                     break;
                 case '3':
-                    escreva("\n\nDigite o novo 'Nº SÉRIE': ");
-                    novaInfo = leia_().ToUpper();
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'Nº SÉRIE': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo == "")
+                        {
+                            escreva_("\nO campo Número de Série não pode estar vazio.\n");
+                            continue;
+                        }
+                        else
+                            break;
+
+                    }
+                    
                     registroEquipamentos[idComparador - 1][3] = novaInfo;
                     break;
                 case '4':
@@ -425,32 +493,67 @@ namespace GestaoEquipametosConsoleApp
 
                         escreva_("\n\nDigite a nova 'DATA FAB': \n");
                         escreva("Dia: ");
+
                         try { dia = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                        if (dia > 31)
+                        {
+                            escreva_("\nO dia não pode ser maior do que 31\n");
+                            continue;
+                        }
+
                         escreva_(" ");
                         escreva("Mês: ");
+
                         try { mes = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                        if (mes > 12)
+                        {
+                            escreva_("\nO mês não pode ser maior do que 12.\n");
+                            continue;
+                        }
+
                         escreva_(" ");
                         escreva("Ano: ");
+
                         try { ano = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
+
+                        if (ano.ToString().Length < 4 || ano.ToString().Length > 4)
+                        {
+                            escreva_("\nO ano não pode mais nem menos do que quatro dígitos.\n");
+                            continue;
+                        }
+
                         escreva_(" ");
 
-                        if ((dia == 0) || (mes == 0) || (ano == 0) || (ano == null) || (mes == null) || (dia == null))
+                        if ((dia == 0) || (mes == 0) || (ano == 0))
                         {
                             escreva_("\nOs campos de data não podem estar vazios ou serem apenas zero.\n");
                             continue;
                         }
-                        else
-                        {
-                            DateTime novaData = new DateTime(ano, mes, dia);
-                            registroEquipamentos[idComparador - 1][4] = novaData.ToString("dd/MM/yyy");
-                            escreva_("");
-                            break; ;
-                        }
+
+                        DateTime novaData = new DateTime(ano, mes, dia);
+                        registroEquipamentos[idComparador - 1][4] = novaData.ToString("dd/MM/yyy");
+                        escreva_(" ");
+                        break; ;
+
                     }
                     break;
                 case '5':
-                    escreva("\n\nDigite o novo 'FABRICANTE': ");
-                    novaInfo = leia_().ToUpper();
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'FABRICANTE': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo == "")
+                        {
+                            escreva_("\nO campo Fabricante não pode ser vazio.\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
+                   
                     registroEquipamentos[idComparador - 1][5] = novaInfo;
                     break;
                 default:
@@ -470,12 +573,25 @@ namespace GestaoEquipametosConsoleApp
             }
             else
             {
-                ExibirRegistroEquipamentos();
                 string[][] auxiliar = new string[1000][];
-                escreva("\n\nDigite o 'ID' a ser excluido: ");
 
-                string excluirID = leia_().ToString();
-                int idExclui = int.Parse(excluirID);
+                ExibirRegistroEquipamentos();
+                
+                int idExclui = 0;
+                while (true)
+                {
+                    escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = leia_().ToString();
+                    idExclui = int.Parse(excluirID);
+
+                    if (registroEquipamentos[idExclui - 1] == null)
+                    {
+                        escreva_("\nO 'ID' digitado não existe.\n");
+                        continue;
+                    }
+                    else
+                        break;
+                }
                 int contAux = 0;
 
                 VerificarIDdoEquipamentoNaChamada(idExclui);
@@ -616,15 +732,28 @@ namespace GestaoEquipametosConsoleApp
                                 }
                             }
 
-                            escreva("\nDigite uma opção de equipamento: ");
-                            opcaoEquipamento = leia_();
                             escreva_("");
-                            int resultado = int.Parse(opcaoEquipamento);
+                            int resultado = 0;
+                            while (true)
+                            {
+                                escreva("\nDigite uma opção de equipamento: ");
+                                opcaoEquipamento = leia_();
+                                try { resultado = int.Parse(opcaoEquipamento); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
+
+                                if (registroEquipamentos[resultado - 1] == null)
+                                {
+                                    escreva_("\nOpção inválida.\n");
+                                    continue;
+                                }
+                                else
+                                    break;
+                            }
+                          
                             chamado[i] = registroEquipamentos[resultado - 1][1];
                             break;
 
                         case 3:
-                            escreva("Data de Abertura: ");
+                            escreva("\nData de Abertura: ");
                             chamado[i] = DateTime.Today.ToString("dd/MM/yyyy");
                             escreva_(chamado[i]);
                             break;
@@ -646,32 +775,55 @@ namespace GestaoEquipametosConsoleApp
                                 }
                             }
 
-                            escreva("\nDigite uma opção de solicitante: ");
-                            opcaoSolicitante = leia_();
                             escreva_("");
-                            int resultadoSolicitante = int.Parse(opcaoSolicitante);
+
+                            int resultadoSolicitante = 0;
+                            while (true)
+                            {
+                                escreva("\nDigite uma opção de solicitante: ");
+                                opcaoSolicitante = leia_();
+                                try { resultadoSolicitante = int.Parse(opcaoSolicitante); } catch (FormatException fe) { escreva_("\nOpção inválida.\n"); continue; }
+
+                                if (registroSolicitantes[resultadoSolicitante - 1] == null)
+                                {
+                                    escreva_("\nOpção inválida.\n");
+                                    continue;
+                                }
+                                else
+                                    break;
+                            }
+                            
                             chamado[i] = registroSolicitantes[resultadoSolicitante - 1][1];
-                            escreva_("Solicitante: " + chamado[i]);
+                            escreva_("\nSolicitante: " + chamado[i]);
                             break;
 
                         case 6:
-                            escreva_("\nStatus: ");
-                            escreva_("1 - ABERTO\n2 - FECHADO");
-                            escreva("\nDigite uma opção: ");
-                            string opcaoStatus = leia_().ToUpper();
-                            chamado[i] = opcaoStatus;
-
-                            if (opcaoStatus == "1")
+                            string opcaoStatus = "";
+                            while (true) 
                             {
-                                chamado[i] = "ABERTO";
-                            }
-                            else if (opcaoStatus == "2")
-                            {
-                                chamado[i] = "FECHADO";
-                            }
-                            else
-                                escreva_("opção inválida!");
+                                escreva_("\nStatus: ");
+                                escreva_("1 - ABERTO\n2 - FECHADO");
+                                escreva("\nDigite uma opção: ");
+                                opcaoStatus = leia_().ToUpper();
+                                chamado[i] = opcaoStatus;
 
+                                if (opcaoStatus == "1")
+                                {
+                                    chamado[i] = "ABERTO";
+                                    break;
+                                }
+                                else if (opcaoStatus == "2")
+                                {
+                                    chamado[i] = "FECHADO";
+                                    break;
+                                }
+                                else
+                                {
+                                    escreva_("\nOpção inválida.");
+                                    continue;
+                                }
+                            }
+                           
                             escreva("\nStatus: " + chamado[i]);
                             break;
 
@@ -868,6 +1020,10 @@ namespace GestaoEquipametosConsoleApp
                 case '4':
                     MostrarMenuInicial();
                     break;
+                default:
+                    escreva_("\nOpção inválida.\n");
+                    Console.ReadKey();
+                    break;
             }
 
             VerificarEquipamentosComMaisProblemas();
@@ -878,25 +1034,90 @@ namespace GestaoEquipametosConsoleApp
 
             ExibirChamados();
 
-            escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-            string idLido = leia_();
-            int idComparador = int.Parse(idLido); 
+            char opcao = ' ';
+            int idComparador = 0;
+            while (true)
+            {
+                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
 
-            escreva_("\nQual campo deseja alterar?:\n\n1 - TÍTULO\n2 - EQUIPAMENTO\n3 - SOLICITANTE\n4 - STATUS\n5 - DESCRIÇÃO");
-            char opcao = Console.ReadKey().KeyChar;
+                if (registroChamados[idComparador - 1] == null)
+                {
+                    escreva_("\nO 'ID' digitado não exite.'\n");
+                    continue;
+                }
+                else
+                    break;
+            }
+
+            while (true)
+            {
+                escreva_("\nQual campo deseja alterar?:\n\n1 - TÍTULO\n2 - EQUIPAMENTO\n3 - SOLICITANTE\n4 - STATUS\n5 - DESCRIÇÃO");
+                opcao = Console.ReadKey().KeyChar;
+
+                if (opcao != '1' && opcao != '2' && opcao != '3' && opcao != '4' && opcao != '5')
+                {
+                    escreva_("\nOpção inválida.\n");
+                    continue;
+                }
+                else
+                    break;
+            }
+
             string novaInfo = "";
 
             switch (opcao)
             {
                 case '1':
-                    escreva("\n\nDigite o novo 'TÍTULO': ");
-                    novaInfo = leia_().ToUpper();
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'TÍTULO': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo == "")
+                        {
+                            escreva_("\nO campo Título não pode estar vazio.\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
+                        
                     registroChamados[idComparador - 1][1] = novaInfo;
                     break;
                 case '2':
-                    escreva("\n\nDigite o novo 'EQUIPAMENTO': ");
-                    novaInfo = leia_().ToUpper();
-                    registroChamados[idComparador - 1][2] = novaInfo;
+                    escreva("\n\nEquipamentos:\n\n");
+                    for (int i = 0; i < registroEquipamentos.Length; i++)
+                    {
+                        if (registroEquipamentos[i] != null)
+                        {
+                            escreva_((i + 1) + " - " + registroEquipamentos[i][1]);
+                        }
+                        else
+                            break;
+                    }
+
+                    string opcaoEquipamento = "";
+                    int opcaoEquip = 0;
+
+                    while (true)
+                    {
+                        escreva("\nEscolha o novo 'EQUIPAMENTO': ");
+                        opcaoEquipamento = leia_();
+                        try { opcaoEquip = Convert.ToInt32(opcaoEquipamento); } catch (FormatException fe) { escreva_("\nFormato inválido\n"); continue; }
+
+                        if (registroEquipamentos[opcaoEquip - 1] == null)
+                        {
+                            escreva_("\nOpção inválida.\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
+
+                    registroChamados[idComparador - 1][2] = registroEquipamentos[opcaoEquip - 1][1];
+                    escreva("\nNovo equipamento: " + registroChamados[idComparador - 1][2] + "\n");
                     break;
                 case '3':
                     int resultadoSolicitante = 0;
@@ -920,7 +1141,7 @@ namespace GestaoEquipametosConsoleApp
                     while (true)
                     {
                         escreva("\nDigite uma opção de solicitante: ");
-                        
+
                         opcaoSolicitante = leia_().ToUpper();
                         escreva_("");
 
@@ -938,34 +1159,55 @@ namespace GestaoEquipametosConsoleApp
                     break;
 
                 case '4':
-                    escreva_("\n\nEscolha o novo 'STATUS': ");
+                    escreva_("\n\nEscolha o novo 'STATUS': \n");
                     escreva_("1 - ABERTO\n2 - FECHADO");
-                    escreva("\nDigite uma opção: ");
+                    
 
-                    novaInfo = leia_().ToUpper();
-
-                    if (novaInfo == "1")
+                    while (true)
                     {
-                        registroChamados[idComparador - 1][6] = "ABERTO";
+                        escreva("\nDigite uma opção: ");
+                        novaInfo = leia_().ToUpper();
+                       
+                        if (novaInfo == "1")
+                        {
+                            registroChamados[idComparador - 1][6] = "ABERTO";
+                            break;
+                        }
+                        else if (novaInfo == "2")
+                        {
+                            registroChamados[idComparador - 1][6] = "FECHADO";
+                            break;
+                        }
+                        else if (novaInfo != "1" && novaInfo != "2")
+                        {
+                            escreva_("\nOpção inválida.");
+                            continue;
+                        }
                     }
-                    else if (novaInfo == "2")
-                    {
-                        registroChamados[idComparador - 1][6] = "FECHADO";
-                    }
-                    else
-                        escreva_("opção inválida!");
-                    break;
 
-                case '5':
-                    escreva("\n\nDigite o novo 'DESCRIÇÃO': ");
-                    novaInfo = leia_().ToUpper();
+                   break;
+               case '5':
+                    while (true)
+                    {
+                        escreva("\n\nDigite o novo 'DESCRIÇÃO': ");
+                        novaInfo = leia_().ToUpper();
+
+                        if (novaInfo == "")
+                        {
+                            escreva_("\nO campo Descrição não pode estar vazio.\n");
+                            continue;
+                        }
+                        else
+                            break;
+                    }
                     registroChamados[idComparador - 1][7] = novaInfo;
                     break;
                 default:
-                    escreva("\n\nOpção inválida!");
+                    escreva("\n\nOpção inválida.\n");
                     Console.ReadKey();
                     break;
             }
+            
             escreva_("\nREGISTRO ATUALIZADO!");
             Console.ReadKey();
         }
@@ -981,10 +1223,22 @@ namespace GestaoEquipametosConsoleApp
             {
                 ExibirChamados();
                 string[][] auxiliar = new string[1000][];
-                escreva("\n\nDigite o 'ID' a ser excluido: ");
+                int idExclui = 0;
+                while (true)
+                {
+                    escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = leia_().ToString();
+                    try { idExclui = int.Parse(excluirID); } catch (FormatException fe) { escreva_("\nFormato inválido.\n"); continue; }
 
-                string excluirID = leia_().ToString();
-                int idExclui = int.Parse(excluirID);
+                    if (registroChamados[idExclui - 1] == null)
+                    {
+                        escreva_("\nO 'ID' digitado não exite.'\n");
+                        continue;
+                    }
+                    else
+                        break;
+                }
+
                 int contAux = 0;
 
                 if (idExclui == 0)
@@ -1126,6 +1380,7 @@ namespace GestaoEquipametosConsoleApp
                             if (ddd.ToString().Length > 2)
                             {
                                 escreva_("\nDDD só tem dois números.\n");
+                                continue;
                             }
                             escreva("Número do telefone: ");
                             try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
@@ -1194,14 +1449,38 @@ namespace GestaoEquipametosConsoleApp
             Console.Clear();
 
             ExibirRegistroSolicitantes();
+            int idComparador = 0;
 
-            escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
-            string idLido = leia_();
-            int idComparador = int.Parse(idLido);
+            while (true)
+            {
+                escreva("\n\nDigite o 'ID' do registro que deseja alterar: ");
+                string idLido = leia_();
+                try { idComparador = int.Parse(idLido); } catch (FormatException) { escreva_("\nFormato inválido.\n"); continue; }
 
-            escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - E-MAIL\n3 - TELEFONE\n");
-            char opcao = Console.ReadKey().KeyChar;
-            string novaInfo = "";
+                if (registroSolicitantes[idComparador - 1] == null)
+                {
+                    escreva_("\nO 'ID' digitado não exite.'\n");
+                    continue;
+                }
+                else
+                    break;
+            }
+
+            char opcao = ' ';
+            string novaInfo = " ";
+            while (true)
+            {
+                escreva_("\nQual campo deseja alterar?:\n\n1 - NOME\n2 - E-MAIL\n3 - TELEFONE\n");
+                opcao = Console.ReadKey().KeyChar;
+
+                if (opcao != '1' && opcao != '2' && opcao != '3')
+                {
+                    escreva_("\nOpção inválida.\n");
+                    continue;
+                }
+                else
+                    break;
+            }
 
             switch (opcao)
             {
@@ -1253,6 +1532,7 @@ namespace GestaoEquipametosConsoleApp
                         if (ddd.ToString().Length > 2)
                         {
                             escreva_("\nDDD só tem dois números.\n");
+                            continue;
                         }
                         escreva("\nNúmero do telefone: ");
                         try { telefone = int.Parse(leia_()); } catch (FormatException fe) { escreva_("\nFormato incorreto. Digite apenas números\n"); continue; }
@@ -1269,7 +1549,7 @@ namespace GestaoEquipametosConsoleApp
                     }
                     break;
                 default:
-                    escreva("\n\nOpção inválida!");
+                    escreva("\n\nOpção inválida.");
                     break;
             }
             escreva_("\nREGISTRO ATUALIZADO!");
@@ -1289,10 +1569,22 @@ namespace GestaoEquipametosConsoleApp
 
                 ExibirRegistroSolicitantes();
                 string[][] auxiliar = new string[1000][];
-                escreva("\n\nDigite o 'ID' a ser excluido: ");
+                int idExclui = 0;
 
-                string excluirID = leia_().ToString();
-                int idExclui = int.Parse(excluirID);
+                while (true)
+                {
+                    escreva("\n\nDigite o 'ID' a ser excluido: ");
+                    string excluirID = leia_().ToString();
+                    try { idExclui = int.Parse(excluirID); } catch (FormatException) { escreva_("\nFormato inválido.\n"); continue; }
+
+                    if (registroSolicitantes[idExclui - 1] == null)
+                    {
+                        escreva_("\nO 'ID' digitado não exite.'\n");
+                        continue;
+                    }
+                    else
+                        break;
+                }
                 int contAux = 0;
 
                 if (idExclui == 0)
@@ -1484,7 +1776,7 @@ namespace GestaoEquipametosConsoleApp
                             j++;
                         }
                         else
-                            break;
+                            break;            
                     }
                 }
                 else
